@@ -123,13 +123,19 @@ Want the colors themselves rather than a whole template? `plotly_color(cycling=T
 
 ### Scientific colormaps, via `mpl_to_plotly`
 
-Plotly doesn't understand Matplotlib colormap objects natively. [Fabio Crameri's perceptually-uniform scientific colormaps](https://www.fabiocrameri.ch/colourmaps/) — re-exported as `cmap` (from `cmcrameri`) — need converting first:
+`cmcrameri` (re-exported here as `cmap`) gives you [Fabio Crameri's perceptually-uniform scientific colormaps](https://www.fabiocrameri.ch/colourmaps/) as **Matplotlib** colormap objects. With Matplotlib itself, that's already all you need — no conversion, no helper function:
+
+```python
+plt.imshow(data, cmap=cmap.acton)   # works as-is, this is plain Matplotlib
+```
+
+Plotly is the problem case: its `colorscale` argument doesn't accept a Matplotlib colormap object at all. Plotly wants its own format — a list of `[position, "rgb(r,g,b)"]` pairs, position running 0 to 1 — so a Matplotlib colormap has to be resampled into that shape before Plotly can use it. That resampling is exactly what `mpl_to_plotly(cmap.<name>, pl_entries=255, rdigits=15)` does: it walks the colormap at `pl_entries` evenly-spaced points and emits the `[position, "rgb(...)"]` list Plotly expects.
 
 ```python
 fig.add_trace(go.Heatmap(z=data, colorscale=mpl_to_plotly(cmap.acton)))
 ```
 
-`mpl_to_plotly(cmap.<name>, pl_entries=255, rdigits=15)` works for the full `cmcrameri` catalog (`cmap.batlow`, `cmap.vik`, `cmap.oslo`, ...), and for any other Matplotlib-style colormap too — a built-in Matplotlib map or your own `LinearSegmentedColormap`.
+So the rule of thumb: **Matplotlib figure → use `cmap.acton` directly; Plotly figure → wrap it, `mpl_to_plotly(cmap.acton)`.** This isn't specific to Crameri's maps either — `mpl_to_plotly` accepts any Matplotlib-style colormap object, a built-in Matplotlib map or your own `LinearSegmentedColormap` included.
 
 A fixed subset is also pre-converted as plain module-level variables in `colors.py`, usable directly with no `mpl_to_plotly` call needed (`colorscale=acton`):
 
