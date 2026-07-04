@@ -14,6 +14,36 @@ This package used to live inside `ScientificGraphicDesign` directly; it's
 now its own repo so it can be installed and versioned independently of
 those tutorials.
 
+## Philosophy
+
+Most of what makes a figure look "publication-ready" is mechanical, not
+creative — the same handful of style decisions applied consistently across
+every plot. So `pyprettyplot` automates that part instead of leaving it to
+be fixed by hand in Illustrator every time:
+
+- **Style defaults out of the box.** Import it and your plots already look
+  like a Nature-style figure: only the left and bottom spines are drawn (no
+  box), thin consistent line/tick widths, true black instead of default
+  Matplotlib gray, and the group's standard font sizes. You're not starting
+  from Matplotlib's defaults and manually stripping spines/gridlines/box on
+  every figure.
+- **The export itself is patched, not just the style.** `pio.write_image`
+  (from Plotly) normally leaves a fair amount of junk in an exported SVG:
+  a background rect you don't want, the left and bottom axis spines drawn
+  as two disconnected path segments instead of one continuous line, and
+  tick marks that don't sit exactly on the spine coordinate (visible the
+  moment you zoom in in a vector editor). `pyprettyplot.write_image` wraps
+  Plotly's exporter and post-processes the SVG to fix exactly this: it
+  drops the background rect, merges the two spine segments into a single
+  path, and snaps every tick mark onto the true spine position. What you
+  get out is a clean SVG you can drop straight into Illustrator without
+  first cleaning up after the renderer.
+
+The specific values (spine widths, font sizes, colors) come from the
+group's house style — see the "rules, in one screen" section of
+[ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)
+for the reasoning behind them.
+
 ## Install
 
 ```
