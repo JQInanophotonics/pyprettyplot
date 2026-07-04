@@ -1,4 +1,12 @@
-# pyprettyplot
+<div align="center">
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/header.svg"/><img src="assets/header.svg" width="97%" alt="pyprettyplot"/></picture>
+
+<a href="#install"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/INSTALL-0d1117?style=flat-square&logoColor=ffffff"/><img src="https://img.shields.io/badge/INSTALL-ffffff?style=flat-square&logoColor=1a1a1a" alt="Install"/></picture></a>
+<a href="https://github.com/JQInanophotonics/ScientificGraphicDesign"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/GRAPHIC%20DESIGN-0d1117?style=flat-square&logoColor=ffffff"/><img src="https://img.shields.io/badge/GRAPHIC%20DESIGN-ffffff?style=flat-square&logoColor=1a1a1a" alt="ScientificGraphicDesign"/></picture></a>
+<a href="https://github.com/JQInanophotonics/ScientificGraphicDesign/tree/main/01-Plotting"><picture><source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/PLOTTING%20EXAMPLE-0d1117?style=flat-square&logoColor=ffffff"/><img src="https://img.shields.io/badge/PLOTTING%20EXAMPLE-ffffff?style=flat-square&logoColor=1a1a1a" alt="Plotting example"/></picture></a>
+
+</div>
 
 A small Python package that pre-loads a consistent plotting style — for
 [`matplotlib`](https://matplotlib.org/) and
@@ -14,7 +22,7 @@ This package used to live inside `ScientificGraphicDesign` directly; it's
 now its own repo so it can be installed and versioned independently of
 those tutorials.
 
-## Philosophy
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-philosophy.svg"/><img src="assets/banner-philosophy.svg" width="97%" alt="00 — Philosophy"/></picture>
 
 Most of what makes a figure look "publication-ready" is mechanical, not
 creative — the same handful of style decisions applied consistently across
@@ -44,19 +52,19 @@ group's house style — see the "rules, in one screen" section of
 [ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)
 for the reasoning behind them.
 
-## Install
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-install.svg"/><img src="assets/banner-install.svg" width="97%" alt="01 — Install"/></picture>
 
 ```
 pip install git+https://github.com/JQInanophotonics/pyprettyplot.git
 ```
 
-## Use
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-use.svg"/><img src="assets/banner-use.svg" width="97%" alt="02 — Use"/></picture>
 
 ```python
 from pyprettyplot import *
 ```
 
-## Defaults
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="03 — Defaults"/></picture>
 
 - Axis linewidth 0.5 pt, tick linewidth 0.5 pt with a 2 pt length, no top/right spines — all in true black.
 - Tick labels 6 pt, axis labels 7 pt.
@@ -66,7 +74,7 @@ from pyprettyplot import *
 - Cycling color palette based on the [Nord theme](https://www.nordtheme.com/docs/colors-and-palettes).
 - `colors.py` also exposes an `IBMColors` class (instantiated as `ibm`) for the [IBM color palette](https://www.ibm.com/design/language/color), e.g. `ibm.cerulean(shade=60)`.
 
-## What's in here
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-whats-in-here.svg"/><img src="assets/banner-whats-in-here.svg" width="97%" alt="04 — What's in Here"/></picture>
 
 ```
 pyprettyplot/
@@ -80,7 +88,7 @@ pyprettyplot/
     └── matplotlibrc      — the matplotlib style sheet this package loads by default
 ```
 
-## See also
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-see-also.svg"/><img src="assets/banner-see-also.svg" width="97%" alt="05 — See Also"/></picture>
 
 Part of the [JQInanophotonics](https://github.com/JQInanophotonics) org. Start with
 [ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)
