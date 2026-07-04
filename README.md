@@ -89,7 +89,9 @@ via `row`/`col`.
 
 Everything below is available immediately after `from pyprettyplot import *` — no separate import.
 
-**IBM Design Language palette.** `ibm` (an instance of `IBMColors`) exposes every color in the [IBM color language](https://www.ibm.com/design/language/color) as a method taking a shade (`1`–`90`, plus `100` for black and `0` for white):
+### IBM Design Language palette
+
+`ibm` (an instance of `IBMColors`) exposes every color in the [IBM color language](https://www.ibm.com/design/language/color) as a method taking a shade:
 
 ```python
 ibm.cerulean(shade=60)   # -> "#175d8d"
@@ -97,38 +99,50 @@ ibm.red(shade=50)        # -> "#e62325"
 ibm.cool_gray(shade=20)  # -> "#b8c1c1"
 ```
 
-Available colors: `ultramarine`, `blue`, `cerulean`, `aqua`, `teal`, `green`, `lime`, `yellow`, `gold`, `orange`, `peach`, `red`, `magenta`, `purple`, `violet`, `indigo`, `gray`, `cool_gray`, `warm_gray`, `neutral_white`, `cool_white`, `warm_white`, `black`, `white`.
+Shades run `1`–`90`, plus `100` for black and `0` for white. Available colors:
+`ultramarine`, `blue`, `cerulean`, `aqua`, `teal`, `green`, `lime`, `yellow`, `gold`, `orange`, `peach`, `red`, `magenta`, `purple`, `violet`, `indigo`, `gray`, `cool_gray`, `warm_gray`, `neutral_white`, `cool_white`, `warm_white`, `black`, `white`.
 
-For when you just need N distinct colors rather than hand-picked shades, a few categorical palettes built from `ibm` are ready to use: `ibm_light_palette2`, `ibm_light_palette3`, `ibm_light_palette4`, `ibm_light_palette5`, `ibm_light_palette12`.
+Need N distinct colors instead of hand-picked shades? A few ready-made palettes are built from `ibm` already: `ibm_light_palette2`, `ibm_light_palette3`, `ibm_light_palette4`, `ibm_light_palette5`, `ibm_light_palette12`.
 
-**Plotly templates**, registered under `pio.templates` the moment you import the package — set one with `fig.update_layout(template="nature")`, or change the default with `pio.templates.default = "..."`:
+### Plotly templates
+
+Registered under `pio.templates` the moment you import the package. Set one with `fig.update_layout(template="nature")`, or change the default with `pio.templates.default = "..."`.
 
 | Template | Colorway |
 |---|---|
-| `"jqi_nano_default"` | **the default after import** — IBM-palette-based, matches the group's house style |
+| `"jqi_nano_default"` | **the default after import** — IBM-palette-based, the group's house style |
 | `"nature"` | *Nature*-journal-style categorical colors |
 | `"science"` | *Science*-journal-style categorical colors |
 | `"ibm_light"` | the 12-color `ibm_light_palette12` |
 | `"google"` | Google Material-style categorical colors |
 | `"default"` | Plotly's own stock colorway, registered here for comparison |
 
-`"nord"` also still works as an alias for `"jqi_nano_default"`, kept for old code — it was the original name, but it was misleading: its colorway is the IBM palette, not the actual Nord color scheme (which sits unused elsewhere in `colors.py`). New code should use `"jqi_nano_default"`.
+`"nord"` still works too, as an alias for `"jqi_nano_default"` — kept for old code. It was the original name, but it was misleading: its colorway is the IBM palette, not the actual Nord color scheme (which sits unused elsewhere in `colors.py`). Use `"jqi_nano_default"` going forward.
 
-`plotly_color(cycling=True, scheme="nature")` returns the same `"nature"` / `"science"` / `"default"` colorways directly — as a plain list (`cycling=False`) or as an `itertools.cycle` (`cycling=True`), for when you want the colors themselves rather than a whole template.
+Want the colors themselves rather than a whole template? `plotly_color(cycling=True, scheme="nature")` returns the `"nature"` / `"science"` / `"default"` colorway directly — a plain list (`cycling=False`) or an `itertools.cycle` (`cycling=True`).
 
-**Scientific colormaps for Plotly, via `mpl_to_plotly`.** Plotly doesn't understand Matplotlib colormap objects natively, so [Fabio Crameri's perceptually-uniform scientific colormaps](https://www.fabiocrameri.ch/colourmaps/) — re-exported as `cmap` (from `cmcrameri`) — need converting first. `mpl_to_plotly(cmap.<name>, pl_entries=255, rdigits=15)` does that conversion, for any colormap in the Crameri catalog:
+### Scientific colormaps, via `mpl_to_plotly`
+
+Plotly doesn't understand Matplotlib colormap objects natively. [Fabio Crameri's perceptually-uniform scientific colormaps](https://www.fabiocrameri.ch/colourmaps/) — re-exported as `cmap` (from `cmcrameri`) — need converting first:
 
 ```python
 fig.add_trace(go.Heatmap(z=data, colorscale=mpl_to_plotly(cmap.acton)))
 ```
 
-This works for the full `cmcrameri` catalog (`cmap.batlow`, `cmap.vik`, `cmap.oslo`, ...), and for any other Matplotlib-style colormap too — a built-in Matplotlib map or your own `LinearSegmentedColormap`, not just Crameri's.
+`mpl_to_plotly(cmap.<name>, pl_entries=255, rdigits=15)` works for the full `cmcrameri` catalog (`cmap.batlow`, `cmap.vik`, `cmap.oslo`, ...), and for any other Matplotlib-style colormap too — a built-in Matplotlib map or your own `LinearSegmentedColormap`.
 
-`colors.py` also carries a fixed subset of these already pre-converted as plain module-level variables — sequential: `acton`, `bilbao`, `davos`, `devon`, `grayC`, `lajolla`, `lapaz`, `oslo`, `tokyo`, `turku`; diverging: `berlin`, `broc`, `cork`, `lisbon`, `roma`, `tofino`, `vik`; special: `oleron` — usable directly as `colorscale=acton`. But `mpl_to_plotly(cmap.<name>)` is the general, always-correct path and covers colormaps outside that fixed list; reach for it by default.
+A fixed subset is also pre-converted as plain module-level variables in `colors.py`, usable directly with no `mpl_to_plotly` call needed (`colorscale=acton`):
 
-Two small color-math helpers round this out: `colorFader(c1, c2, mix=0)` linearly interpolates between two colors, and `lighten_color(color, amount=0.5)` lightens a single color by a given amount.
+- Sequential: `acton`, `bilbao`, `davos`, `devon`, `grayC`, `lajolla`, `lapaz`, `oslo`, `tokyo`, `turku`
+- Diverging: `berlin`, `broc`, `cork`, `lisbon`, `roma`, `tofino`, `vik`
+- Special: `oleron` (a split, two-scale colormap)
 
-**Not auto-imported:** `gregplot.py` also ships in this package (matplotlib helpers, a `createColor` gradient function, spine/font adjustment) but its import is commented out in `__init__.py` — `from pyprettyplot import *` will not give you these. Use `from pyprettyplot.gregplot import <name>` explicitly if you need them.
+`mpl_to_plotly` remains the general, always-correct path — reach for it by default, and treat the list above as a shortcut for just those specific maps.
+
+### Small color helpers
+
+- `colorFader(c1, c2, mix=0)` — linearly interpolate between two colors.
+- `lighten_color(color, amount=0.5)` — lighten a single color by a given amount.
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="04 — Defaults"/></picture>
 
