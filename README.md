@@ -58,37 +58,105 @@ for the reasoning behind them.
 pip install git+https://github.com/JQInanophotonics/pyprettyplot.git
 ```
 
+Or, for a local/editable install (e.g. if you want to read or modify the source):
+
+```
+git clone https://github.com/JQInanophotonics/pyprettyplot.git
+cd pyprettyplot
+pip install -r requirements.txt
+pip install -e .
+```
+
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-use.svg"/><img src="assets/banner-use.svg" width="97%" alt="02 — Use"/></picture>
 
 ```python
 from pyprettyplot import *
 ```
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="03 — Defaults"/></picture>
+This one import does everything at once: loads the group's `matplotlibrc`
+style, registers several Plotly templates and sets `"nord"` as the default
+one, and monkeypatches `pio.write_image` so every SVG export is
+already cleaned up (see the Philosophy section above). Nothing else
+to opt into — the rest of this README is what becomes available to you
+after that one line.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-colors.svg"/><img src="assets/banner-colors.svg" width="97%" alt="03 — Color Palettes and Colormaps"/></picture>
+
+Everything below is available immediately after `from pyprettyplot import *` — no separate import.
+
+**IBM Design Language palette.** `ibm` (an instance of `IBMColors`) exposes every color in the [IBM color language](https://www.ibm.com/design/language/color) as a method taking a shade (`1`–`90`, plus `100` for black and `0` for white):
+
+```python
+ibm.cerulean(shade=60)   # -> "#175d8d"
+ibm.red(shade=50)        # -> "#e62325"
+ibm.cool_gray(shade=20)  # -> "#b8c1c1"
+```
+
+Available colors: `ultramarine`, `blue`, `cerulean`, `aqua`, `teal`, `green`, `lime`, `yellow`, `gold`, `orange`, `peach`, `red`, `magenta`, `purple`, `violet`, `indigo`, `gray`, `cool_gray`, `warm_gray`, `neutral_white`, `cool_white`, `warm_white`, `black`, `white`.
+
+For when you just need N distinct colors rather than hand-picked shades, a few categorical palettes built from `ibm` are ready to use: `ibm_light_palette2`, `ibm_light_palette3`, `ibm_light_palette4`, `ibm_light_palette5`, `ibm_light_palette12`.
+
+**Plotly templates**, registered under `pio.templates` the moment you import the package — set one with `fig.update_layout(template="nature")`, or change the default with `pio.templates.default = "..."`:
+
+| Template | Colorway |
+|---|---|
+| `"nord"` | **the default after import** — IBM-palette-based, matches the group's house style |
+| `"nature"` | *Nature*-journal-style categorical colors |
+| `"science"` | *Science*-journal-style categorical colors |
+| `"ibm_light"` | the 12-color `ibm_light_palette12` |
+| `"google"` | Google Material-style categorical colors |
+| `"default"` | Plotly's own stock colorway, registered here for comparison |
+
+`plotly_color(cycling=True, scheme="nature")` returns the same `"nature"` / `"science"` / `"default"` colorways directly — as a plain list (`cycling=False`) or as an `itertools.cycle` (`cycling=True`), for when you want the colors themselves rather than a whole template.
+
+**Scientific colormaps, pre-converted for Plotly.** [Fabio Crameri's perceptually-uniform scientific colormaps](https://www.fabiocrameri.ch/colourmaps/) are already converted to Plotly's `colorscale` format and importable by name — no conversion step needed:
+
+- Sequential: `acton`, `bilbao`, `davos`, `devon`, `grayC`, `lajolla`, `lapaz`, `oslo`, `tokyo`, `turku`
+- Diverging: `berlin`, `broc`, `cork`, `lisbon`, `roma`, `tofino`, `vik`
+- Special: `oleron` (a split, two-scale colormap)
+
+```python
+fig.add_trace(go.Heatmap(z=data, colorscale=acton))
+```
+
+For any other colormap — a different `cmcrameri` map, a Matplotlib built-in, or your own `LinearSegmentedColormap` — convert it yourself with `mpl_to_plotly(cmap, pl_entries=255, rdigits=15)`, the same function the colormaps above were generated with.
+
+Two small color-math helpers round this out: `colorFader(c1, c2, mix=0)` linearly interpolates between two colors, and `lighten_color(color, amount=0.5)` lightens a single color by a given amount.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-helpers.svg"/><img src="assets/banner-helpers.svg" width="97%" alt="04 — Other Helpers"/></picture>
+
+- `addPlotlyLine(fig, x, y=[0, 0], clr=..., lw=2, row=None, col=None, dash=None)` — draw a straight reference line onto a Plotly figure, or a specific subplot via `row`/`col`.
+- `loadOSA(fname, noise=-85, freq_lim=[None, None])` — load an optical spectrum analyzer CSV export into a tidy `freq`/`lbd`/`S` dataframe, clipping the noise floor and optionally restricting to a frequency range.
+- Dispersion/coupling post-processing (`dispersion.py`, also auto-imported): `getDisp`, `getDint`, `getδf`, `getSFG`, `ProcessDispSim`, `ProcessCoupling` — turn microresonator simulation output (mode number, frequency, geometry sweeps) into effective index, group index, integrated dispersion (`Dint`), FSR, and related quantities. Specific to this group's photonics simulations, not general-purpose plotting.
+
+**Not auto-imported:** `gregplot.py` also ships in this package (matplotlib helpers, a `createColor` gradient function, spine/font adjustment) but its import is commented out in `__init__.py` — `from pyprettyplot import *` will not give you these. Use `from pyprettyplot.gregplot import <name>` explicitly if you need them.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="05 — Defaults"/></picture>
+
+The Matplotlib-side defaults, loaded from the bundled `matplotlibrc` — for the Plotly-side template/colorway defaults, see Color palettes & colormaps, above.
 
 - Axis linewidth 0.5 pt, tick linewidth 0.5 pt with a 2 pt length, no top/right spines — all in true black.
 - Tick labels 6 pt, axis labels 7 pt.
 - Font: **Helvetica Neue** if it's installed locally (e.g. via an Adobe Creative Cloud license), falling back to matplotlib's default sans-serif otherwise. No font files are bundled in this package — see
   [ScientificGraphicDesign/04-Fonts](https://github.com/JQInanophotonics/ScientificGraphicDesign/tree/main/04-Fonts)
   for why and how to install it.
-- Cycling color palette based on the [Nord theme](https://www.nordtheme.com/docs/colors-and-palettes).
-- `colors.py` also exposes an `IBMColors` class (instantiated as `ibm`) for the [IBM color palette](https://www.ibm.com/design/language/color), e.g. `ibm.cerulean(shade=60)`.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-whats-in-here.svg"/><img src="assets/banner-whats-in-here.svg" width="97%" alt="04 — What's in Here"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-whats-in-here.svg"/><img src="assets/banner-whats-in-here.svg" width="97%" alt="06 — What's in Here"/></picture>
 
 ```
 pyprettyplot/
 ├── setup.py
-├── requirements.txt (via pyprettyplot/requirements.txt)
+├── requirements.txt
 └── pyprettyplot/
-    ├── __init__.py       — plotly helpers, style setup, SVG/figure export
-    ├── colors.py         — color palettes and colormaps (IBM, Nord, SecretColors wrappers)
-    ├── dispersion.py     — microresonator dispersion/coupling processing helpers
-    ├── gregplot.py       — additional matplotlib plotting helpers
-    └── matplotlibrc      — the matplotlib style sheet this package loads by default
+    ├── requirements.txt   — same pinned dependencies, kept alongside the package data
+    ├── __init__.py        — plotly helpers, style setup, SVG/figure export
+    ├── colors.py          — color palettes and colormaps (IBM, Nord, Crameri, SecretColors wrappers)
+    ├── dispersion.py      — microresonator dispersion/coupling processing helpers
+    ├── gregplot.py        — additional matplotlib plotting helpers (not auto-imported)
+    └── matplotlibrc       — the matplotlib style sheet this package loads by default
 ```
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-see-also.svg"/><img src="assets/banner-see-also.svg" width="97%" alt="05 — See Also"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-see-also.svg"/><img src="assets/banner-see-also.svg" width="97%" alt="07 — See Also"/></picture>
 
 Part of the [JQInanophotonics](https://github.com/JQInanophotonics) org. Start with
 [ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)

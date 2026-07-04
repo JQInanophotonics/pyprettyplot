@@ -20,6 +20,7 @@ setup(
         "SecretColors",
         "nbformat",
         "kaleido",
+        "lxml",
     ],
     include_package_data=True,
     zip_safe=False,
