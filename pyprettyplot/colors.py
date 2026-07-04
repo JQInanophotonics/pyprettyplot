@@ -601,9 +601,13 @@ clrway_ibm = [
     ibm.teal(shade=40),
     ibm.purple(shade=50),  
 ]
-pio.templates["nord"] = go.layout.Template(layout_colorway=clrway_ibm, layout=tmplt)
-pio.templates["nord"].data.scatter = [go.Scatter(line_width=1)]
-pio.templates["nord"].layout.legend.update(borderwidth=0, font_size=12, tracegroupgap=2)
+pio.templates["jqi_nano_default"] = go.layout.Template(layout_colorway=clrway_ibm, layout=tmplt)
+pio.templates["jqi_nano_default"].data.scatter = [go.Scatter(line_width=1)]
+pio.templates["jqi_nano_default"].layout.legend.update(borderwidth=0, font_size=12, tracegroupgap=2)
+# Legacy alias: this template used to be registered as "nord", which was
+# misleading - its colorway is clrway_ibm (IBM palette), not the nord dict
+# above. Kept so existing code using template="nord" doesn't break.
+pio.templates["nord"] = pio.templates["jqi_nano_default"]
 
 
 def plotly_color(cycling=True, scheme="nature"):

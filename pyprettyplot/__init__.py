@@ -3,10 +3,8 @@ import os
 import re
 
 import pickle as pkl
-import pandas as pd
 import numpy as np
 from scipy import signal
-from scipy import constants as cts
 from glob import glob
 
 import matplotlib as mpl
@@ -62,31 +60,12 @@ def addPlotlyLine(fig, x, y=[0, 0], clr=zclr, lw=2, row=None, col=None, dash=Non
             col=col,
         )
 
-def loadOSA(fname, noise=-85, freq_lim = [None, None]):
-    df = pd.read_csv(fname)
-    df["freq"] = cts.c / df.lbd
-    df.S[df.S < noise] = noise
-    to_keep = ["freq", "lbd", "S"]
-    
-    if freq_lim[0] is not None:
-        df = df[df.freq > freq_lim[0]]
-    if freq_lim[1] is not None:
-        df = df[df.freq < freq_lim[1]]
-    columns = df.columns.values
-    to_drop = [cc for cc in columns if not cc in to_keep]
-    df.drop(to_drop, axis=1, inplace=True)
-    df.sort_values("freq", inplace=True)
-    df.reset_index(inplace=True, drop=True)
-    return df
-
-
 from .colors import *
-from .dispersion import *
 # from .gregplot import *
 # from .lineardata import *
 # from .plotlyServer import plotlyServer
 
-pio.templates.default = "nord"
+pio.templates.default = "jqi_nano_default"
 
 
 
