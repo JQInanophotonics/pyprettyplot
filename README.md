@@ -22,7 +22,7 @@ This package used to live inside `ScientificGraphicDesign` directly; it's
 now its own repo so it can be installed and versioned independently of
 those tutorials.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-philosophy.svg"/><img src="assets/banner-philosophy.svg" width="97%" alt="00 — Philosophy"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-philosophy.svg"/><img src="assets/banner-philosophy.svg" width="97%" alt="Philosophy"/></picture>
 
 Most of what makes a figure look "publication-ready" is mechanical, not
 creative — the same handful of style decisions applied consistently across
@@ -52,7 +52,7 @@ group's house style — see the "rules, in one screen" section of
 [ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)
 for the reasoning behind them.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-install.svg"/><img src="assets/banner-install.svg" width="97%" alt="01 — Install"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-install.svg"/><img src="assets/banner-install.svg" width="97%" alt="Install"/></picture>
 
 ```
 pip install git+https://github.com/JQInanophotonics/pyprettyplot.git
@@ -67,7 +67,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-use.svg"/><img src="assets/banner-use.svg" width="97%" alt="02 — Use"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-use.svg"/><img src="assets/banner-use.svg" width="97%" alt="Use"/></picture>
 
 ```python
 from pyprettyplot import *
@@ -85,7 +85,7 @@ One small figure helper lives outside the color/style system:
 draws a straight reference line onto a Plotly figure, or a specific subplot
 via `row`/`col`.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-colors.svg"/><img src="assets/banner-colors.svg" width="97%" alt="03 — Color Palettes and Colormaps"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-colors.svg"/><img src="assets/banner-colors.svg" width="97%" alt="Color Palettes and Colormaps"/></picture>
 
 Everything below is available immediately after `from pyprettyplot import *` — no separate import.
 
@@ -150,7 +150,7 @@ A fixed subset is also pre-converted as plain module-level variables in `colors.
 - `colorFader(c1, c2, mix=0)` — linearly interpolate between two colors.
 - `lighten_color(color, amount=0.5)` — lighten a single color by a given amount.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="04 — Defaults"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-defaults.svg"/><img src="assets/banner-defaults.svg" width="97%" alt="Defaults"/></picture>
 
 The Matplotlib-side defaults, loaded from the bundled `matplotlibrc` — for the Plotly-side template/colorway defaults, see Color palettes & colormaps, above.
 
@@ -160,7 +160,7 @@ The Matplotlib-side defaults, loaded from the bundled `matplotlibrc` — for the
   [ScientificGraphicDesign/04-Fonts](https://github.com/JQInanophotonics/ScientificGraphicDesign/tree/main/04-Fonts)
   for why and how to install it.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-whats-in-here.svg"/><img src="assets/banner-whats-in-here.svg" width="97%" alt="05 — What's in Here"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-whats-in-here.svg"/><img src="assets/banner-whats-in-here.svg" width="97%" alt="What's in Here"/></picture>
 
 ```
 pyprettyplot/
@@ -174,7 +174,7 @@ pyprettyplot/
     └── matplotlibrc       — the matplotlib style sheet this package loads by default
 ```
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-see-also.svg"/><img src="assets/banner-see-also.svg" width="97%" alt="06 — See Also"/></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/dark/banner-see-also.svg"/><img src="assets/banner-see-also.svg" width="97%" alt="See Also"/></picture>
 
 Part of the [JQInanophotonics](https://github.com/JQInanophotonics) org. Start with
 [ScientificGraphicDesign](https://github.com/JQInanophotonics/ScientificGraphicDesign)
