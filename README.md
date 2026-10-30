@@ -164,7 +164,7 @@ The Matplotlib-side defaults, loaded from the bundled `matplotlibrc` — for the
 
 - Axis linewidth 0.5 pt, tick linewidth 0.5 pt with a 2 pt length, no top/right spines — all in true black.
 - Tick labels 6 pt, axis labels 7 pt.
-- Font: **Helvetica Neue** if it's installed locally (e.g. via an Adobe Creative Cloud license), falling back to matplotlib's default sans-serif otherwise. No font files are bundled in this package — see
+- Font: **Helvetica Neue** (it comes with macOS) for the `label` helper and the Plotly templates, falling back to matplotlib's default sans-serif otherwise. No font files are bundled in this package — see
   [ScientificGraphicDesign/04-Fonts](https://github.com/JQInanophotonics/ScientificGraphicDesign/tree/main/04-Fonts)
   for why and how to install it.
 

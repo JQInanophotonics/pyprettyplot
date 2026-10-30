@@ -501,30 +501,30 @@ nord = dict(
 
 tmplt = pio.templates["plotly_white"].layout
 
-font = "HelveticaNeueLTPro-Roman"
+font = "Helvetica Neue"
 size = 12
 weight = 400
 tmplt.title.update(
     x=0.05,
     font=dict(
         # family="IBM Plex Sans Condensed, Open Sans, verdana, arial, sans-serif", size=18
-        family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+        family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
     ),
 )
 
 tmplt.font.update(
-    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif",
+    family=f"{font}, Open Sans, verdana, arial, sans-serif",
     color="black",
     size=size,
     weight=weight,
 )
-tmplt.xaxis.tickfont.update(family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
-tmplt.yaxis.tickfont.update(family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
+tmplt.xaxis.tickfont.update(family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
+tmplt.yaxis.tickfont.update(family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
 tmplt.yaxis.title.font.update(
-    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+    family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
 )
 tmplt.xaxis.title.font.update(
-    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+    family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
 )
 tmplt.yaxis.update(zeroline=False)
 tmplt.xaxis.update(
