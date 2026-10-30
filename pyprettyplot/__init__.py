@@ -68,6 +68,69 @@ from .colors import *
 pio.templates.default = "jqi_nano_default"
 
 
+# Fixes applied at export time. Everything that renders (show, write_image,
+# write_html, to_json) goes through to_dict().
+#
+# plotly.js draws 10^n tick labels 1.25x bigger on log axes with
+# exponentformat='power' (hardcoded in axes.js); undo it so the labels come out
+# at the tickfont size actually requested.
+_POWER_LOG_SCALE = 1.25
+# Take the originals from plotly itself, not from go.Figure / pio, so that
+# re-running this module (%autoreload) doesn't wrap the patch around itself.
+from plotly.basedatatypes import BaseFigure
+
+_plotly_to_dict = BaseFigure.to_dict
+
+
+def _axis_attr(name, layout, tmpl_layout, *path):
+    tmpl_ax = tmpl_layout.get(re.sub(r"\d+$", "", name), {})
+    for src in (layout[name], tmpl_ax):
+        for key in path:
+            src = src.get(key) if isinstance(src, dict) else None
+        if src is not None:
+            return src
+    return None
+
+
+def _merge(base, override):
+    out = dict(base)
+    for k, v in override.items():
+        out[k] = _merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+    return out
+
+
+def _export_fixes(self, *args, **kwargs):
+    fig = _plotly_to_dict(self, *args, **kwargs)
+    layout = fig.get("layout", {})
+    tmpl_layout = layout.get("template", {}).get("layout", {})
+
+    # Templates only style `legend`; legend2, legend3, ... would fall back to
+    # plotly defaults, so give them the template legend style too (the figure's
+    # own legendN settings still win).
+    tmpl_legend = tmpl_layout.get("legend", {})
+    legends = {t.get("legend") for t in fig.get("data", [])}
+    legends |= {k for k in layout if re.fullmatch(r"legend\d+", k)}
+    for name in legends - {None, "legend"}:
+        layout[name] = _merge(tmpl_legend, layout.get(name, {}))
+
+    for name in [k for k in layout if re.fullmatch(r"[xy]axis\d*", k)]:
+        if _axis_attr(name, layout, tmpl_layout, "type") != "log":
+            continue
+        if _axis_attr(name, layout, tmpl_layout, "exponentformat") != "power":
+            continue
+        fsize = (
+            _axis_attr(name, layout, tmpl_layout, "tickfont", "size")
+            or layout.get("font", {}).get("size")
+            or tmpl_layout.get("font", {}).get("size")
+            or 12
+        )
+        layout[name].setdefault("tickfont", {})["size"] = fsize / _POWER_LOG_SCALE
+    return fig
+
+
+go.Figure.to_dict = _export_fixes
+
+
 
 
 
@@ -75,7 +138,7 @@ import plotly.io as pio
 from lxml import etree
 import re
 
-_original_write_image = pio.write_image
+from plotly.io._kaleido import write_image as _original_write_image
 
 def _fix_svg_corners(svg_bytes):
     root = etree.fromstring(svg_bytes)

@@ -508,23 +508,23 @@ tmplt.title.update(
     x=0.05,
     font=dict(
         # family="IBM Plex Sans Condensed, Open Sans, verdana, arial, sans-serif", size=18
-        family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+        family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
     ),
 )
 
 tmplt.font.update(
-    family=f"{font} ,Open Sans, verdana, arial, sans-serif",
+    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif",
     color="black",
     size=size,
     weight=weight,
 )
-tmplt.xaxis.tickfont.update(family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
-tmplt.yaxis.tickfont.update(family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
+tmplt.xaxis.tickfont.update(family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
+tmplt.yaxis.tickfont.update(family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight)
 tmplt.yaxis.title.font.update(
-    family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
 )
 tmplt.xaxis.title.font.update(
-    family=f"{font}, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
+    family=f"{font}, Helvetica Neue, Open Sans, verdana, arial, sans-serif", size=size, weight=weight
 )
 tmplt.yaxis.update(zeroline=False)
 tmplt.xaxis.update(
@@ -603,7 +603,7 @@ clrway_ibm = [
 ]
 pio.templates["jqi_nano_default"] = go.layout.Template(layout_colorway=clrway_ibm, layout=tmplt)
 pio.templates["jqi_nano_default"].data.scatter = [go.Scatter(line_width=1)]
-pio.templates["jqi_nano_default"].layout.legend.update(borderwidth=0, font_size=12, tracegroupgap=2)
+pio.templates["jqi_nano_default"].layout.legend.update(borderwidth=0, font_size=10, tracegroupgap=0)
 # Legacy alias: this template used to be registered as "nord", which was
 # misleading - its colorway is clrway_ibm (IBM palette), not the nord dict
 # above. Kept so existing code using template="nord" doesn't break.
