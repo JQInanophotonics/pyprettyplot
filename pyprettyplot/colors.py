@@ -501,7 +501,7 @@ nord = dict(
 
 tmplt = pio.templates["plotly_white"].layout
 
-font = "HelveticaNeueLTPro-Roman"
+font = "Helvetica Neue"
 size = 12
 weight = 400
 tmplt.title.update(
@@ -513,7 +513,7 @@ tmplt.title.update(
 )
 
 tmplt.font.update(
-    family=f"{font} ,Open Sans, verdana, arial, sans-serif",
+    family=f"{font}, Open Sans, verdana, arial, sans-serif",
     color="black",
     size=size,
     weight=weight,
@@ -603,7 +603,7 @@ clrway_ibm = [
 ]
 pio.templates["jqi_nano_default"] = go.layout.Template(layout_colorway=clrway_ibm, layout=tmplt)
 pio.templates["jqi_nano_default"].data.scatter = [go.Scatter(line_width=1)]
-pio.templates["jqi_nano_default"].layout.legend.update(borderwidth=0, font_size=12, tracegroupgap=2)
+pio.templates["jqi_nano_default"].layout.legend.update(borderwidth=0, font_size=10, tracegroupgap=0)
 # Legacy alias: this template used to be registered as "nord", which was
 # misleading - its colorway is clrway_ibm (IBM palette), not the nord dict
 # above. Kept so existing code using template="nord" doesn't break.

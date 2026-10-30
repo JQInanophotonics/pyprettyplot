@@ -46,6 +46,14 @@ be fixed by hand in Illustrator every time:
   path, and snaps every tick mark onto the true spine position. What you
   get out is a clean SVG you can drop straight into Illustrator without
   first cleaning up after the renderer.
+- **Plotly's own font quirks are undone too.** On a log axis with
+  `exponentformat="power"`, Plotly draws the 10ⁿ tick labels 1.25× bigger
+  than the font size you set; pyprettyplot scales them back, so they match
+  the other tick labels. Extra legends (`legend="legend2"`, `legend3`, …)
+  get the same style as the main legend (10 pt, no border, no gap between
+  entries) instead of Plotly's defaults. Both apply everywhere a figure is
+  rendered — the notebook, `write_image`, `write_html` — and your own
+  per-figure settings still win.
 
 The specific values (spine widths, font sizes, colors) come from the
 group's house style — see the "rules, in one screen" section of
@@ -156,7 +164,7 @@ The Matplotlib-side defaults, loaded from the bundled `matplotlibrc` — for the
 
 - Axis linewidth 0.5 pt, tick linewidth 0.5 pt with a 2 pt length, no top/right spines — all in true black.
 - Tick labels 6 pt, axis labels 7 pt.
-- Font: **Helvetica Neue** if it's installed locally (e.g. via an Adobe Creative Cloud license), falling back to matplotlib's default sans-serif otherwise. No font files are bundled in this package — see
+- Font: **Helvetica Neue** (it comes with macOS) for the `label` helper and the Plotly templates, falling back to matplotlib's default sans-serif otherwise. No font files are bundled in this package — see
   [ScientificGraphicDesign/04-Fonts](https://github.com/JQInanophotonics/ScientificGraphicDesign/tree/main/04-Fonts)
   for why and how to install it.
 
